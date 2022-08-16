@@ -1,11 +1,10 @@
 #!/usr/bin/python3
-from cgi import print_exception
 import fetchPrice
 import re
 import time
 
 
-filename = "urls.txt"
+filename = "urls.txt" #filename textfile with urls
 currency = 3 #USD = 1, GPB = 2, EUR = 3, etc
 
 
