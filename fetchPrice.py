@@ -1,7 +1,5 @@
 import json
-from xml.etree.ElementTree import tostring
 import requests
-import json
 
 #The given url is in the form of:
 #https://steamcommunity.com/market/listings/730/StatTrak%E2%84%A2%20M4A1-S%20%7C%20Hyper%20Beast%20%28Minimal%20Wear%29
