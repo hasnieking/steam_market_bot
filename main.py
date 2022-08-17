@@ -50,14 +50,19 @@ def getLowestPrice(data):
     price_str = re.sub(r'[^0-9]', '', price_str)
     return int(price_str)
 
+def processItem(item):
+    if item["enable"] == False:
+        return
+    data = fetchPrice.fetch(item["url"], currency)
+    print (getLowestPrice(data))
 
 
 
 def loop():
     while True:
         for item in items["items"]:
-            print(item["name"])
-            time.sleep(1)
+            processItem(item)
+            time.sleep(0.1)
         time.sleep(refreshtime)
 
 
