@@ -1,5 +1,6 @@
 {
     "currency": 3, 
+    "refreshtime": 300, 
 
     "database": {
         "save_to_db": true,

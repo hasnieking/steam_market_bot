@@ -19,10 +19,8 @@ def start():
     if(save_to_db):
         db = dbHandler.createDBConnector()
 
-    for item in items["items"]:
-        data = fetchPrice.fetch(item["url"], currency)
-        print(getLowestPrice(data))
-        time.sleep(1)
+    loop()
+
 
 #set settings from settings.json
 def getSettings():
@@ -30,9 +28,11 @@ def getSettings():
     
     global currency
     global save_to_db
+    global refreshtime
 
     currency = settings["currency"]
     save_to_db = settings["database"]["save_to_db"]
+    refreshtime = settings["refreshtime"]
 
 
 #get items
@@ -49,6 +49,16 @@ def getLowestPrice(data):
     price_str = data["lowest_price"]
     price_str = re.sub(r'[^0-9]', '', price_str)
     return int(price_str)
+
+
+
+
+def loop():
+    while True:
+        for item in items["items"]:
+            print(item["name"])
+            time.sleep(1)
+        time.sleep(refreshtime)
 
 
 
