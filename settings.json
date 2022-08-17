@@ -9,6 +9,7 @@
 
     "notifications": {
         "price_change": true,
-        "volume_change": true
+        "volume_change": true,
+        "under_price": true
     }
 }
