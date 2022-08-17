@@ -1,0 +1,22 @@
+{
+    "items": [
+        {
+            "name": "StatTrak™ M4A1-S | Hyper Beast",
+            "enable": true,
+            "url": "https://steamcommunity.com/market/listings/730/StatTrak%E2%84%A2%20M4A1-S%20%7C%20Hyper%20Beast%20%28Minimal%20Wear%29",
+            "track_database": true
+        },
+        {
+            "name": ":cozykcdaxe:",
+            "enable": true,
+            "url": "https://steamcommunity.com/market/listings/753/991980-%3Acozykcdaxe%3A",
+            "track_database": true
+        },
+        {
+            "name": "Hatzilla",
+            "enable": true,
+            "url": "https://steamcommunity.com/market/listings/238460/Hatzilla",
+            "track_database": true
+        }
+    ]
+}

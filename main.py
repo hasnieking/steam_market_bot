@@ -1,45 +1,44 @@
 #!/usr/bin/python3
+import general
 import fetchPrice
 import dbHandler
 import re
 import time
-import json
 
 
+#filenames
+SETTINGS_FILE = "settings.json"
+ITEMS_FILE = "items.json"
 
 
 #start
 def start():
     getSettings()
-    getURLS()
+    getItems()
 
     if(save_to_db):
         db = dbHandler.createDBConnector()
 
-    for url in urls:
-        data = fetchPrice.fetch(url, currency)
-        try:
-            print(getLowestPrice(data))
-        except Exception as ex:
-            print(ex)
-            
+    for item in items["items"]:
+        data = fetchPrice.fetch(item["url"], currency)
+        print(getLowestPrice(data))
         time.sleep(1)
-
 
 #set settings from settings.json
 def getSettings():
-    f = open("settings.json", "r")
-    text = f.read()
-    f.close()
-    settings = json.loads(text)
+    settings = general.readJSON(SETTINGS_FILE)
     
-    global url_filename
     global currency
     global save_to_db
 
-    url_filename = settings["url_filename"]
     currency = settings["currency"]
     save_to_db = settings["database"]["save_to_db"]
+
+
+#get items
+def getItems():
+    global items
+    items = general.readJSON(ITEMS_FILE)
 
 
 #get lowest price from fetched data
@@ -51,19 +50,6 @@ def getLowestPrice(data):
     price_str = re.sub(r'[^0-9]', '', price_str)
     return int(price_str)
 
-
-
-#get urls from file
-urls = []
-def getURLS():
-    f = open(url_filename, "r")
-    lines = f.readlines()
-    f.close()
-
-    for line in lines:
-        line = line.replace("\n", "")
-        line = line.replace("http:", "https:")
-        urls.append(line)
 
 
 start()
