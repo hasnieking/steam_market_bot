@@ -1,0 +1,14 @@
+{
+    "url_filename":"urls.txt", 
+    "currency": 3, 
+
+    "database": {
+        "save_to_db": true,
+        "db_filename": "history.sql"
+    },
+
+    "notifications": {
+        "price_change": true,
+        "volume_change": true
+    }
+}

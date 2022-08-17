@@ -2,14 +2,14 @@
 import fetchPrice
 import re
 import time
+import json
 
 
-filename = "urls.txt" #filename textfile with urls
-currency = 3 #USD = 1, GPB = 2, EUR = 3, etc
 
 
 #start
 def start():
+    getSettings()
     getURLS()
 
     for url in urls:
@@ -18,6 +18,22 @@ def start():
         time.sleep(1)
 
 
+#set settings from settings.json
+def getSettings():
+    f = open("settings.json", "r")
+    text = f.read()
+    f.close()
+    settings = json.loads(text)
+    
+    global url_filename
+    global currency
+    global save_to_db
+    global db_filename
+
+    url_filename = settings["url_filename"]
+    currency = settings["currency"]
+    save_to_db = settings["database"]["save_to_db"]
+    db_filename = settings["database"]["db_filename"]
 
 
 #get lowest price from fetched data
@@ -31,7 +47,7 @@ def getLowestPrice(data):
 #get urls from file
 urls = []
 def getURLS():
-    f = open(filename, "r")
+    f = open(url_filename, "r")
     lines = f.readlines()
     f.close()
 
@@ -39,9 +55,6 @@ def getURLS():
         line = line.replace("\n", "")
         line = line.replace("http:", "https:")
         urls.append(line)
-
-    return
-
 
 
 start()
