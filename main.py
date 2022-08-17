@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import fetchPrice
+import dbHandler
 import re
 import time
 import json
@@ -11,6 +12,9 @@ import json
 def start():
     getSettings()
     getURLS()
+
+    if(save_to_db):
+        db = dbHandler.createDBConnector()
 
     for url in urls:
         data = fetchPrice.fetch(url, currency)
@@ -28,12 +32,10 @@ def getSettings():
     global url_filename
     global currency
     global save_to_db
-    global db_filename
 
     url_filename = settings["url_filename"]
     currency = settings["currency"]
     save_to_db = settings["database"]["save_to_db"]
-    db_filename = settings["database"]["db_filename"]
 
 
 #get lowest price from fetched data

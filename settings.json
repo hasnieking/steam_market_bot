@@ -4,7 +4,10 @@
 
     "database": {
         "save_to_db": true,
-        "db_filename": "history.sql"
+        "host": "localhost",
+        "user":"steambot",
+        "password":"VulnerablePassword123",
+        "database": "steammarket"
     },
 
     "notifications": {
