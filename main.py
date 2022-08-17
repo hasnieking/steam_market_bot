@@ -16,10 +16,12 @@ def start():
     getSettings()
     getItems()
 
+    db = None
     if(save_to_db):
         db = dbHandler.createDBConnector()
+        #dbHandler.readyDB(items)
 
-    loop()
+    loop(db)
 
 
 #set settings from settings.json
@@ -50,18 +52,25 @@ def getLowestPrice(data):
     price_str = re.sub(r'[^0-9]', '', price_str)
     return int(price_str)
 
-def processItem(item):
-    if item["enable"] == False:
+def processItem(item, db):
+    if not item["enable"]:
         return
     data = fetchPrice.fetch(item["url"], currency)
-    print (getLowestPrice(data))
+    try:
+        print (getLowestPrice(data))
+    except Exception as ex:
+        print(item["name"] + ": " + ex)
+    else:
+        if item["track_database"]:
+            #dbHandler.saveDB(data, db)
+            print("[TEMP]save")
 
 
 
-def loop():
+def loop(db):
     while True:
         for item in items["items"]:
-            processItem(item)
+            processItem(item, db)
             time.sleep(0.1)
         time.sleep(refreshtime)
 
