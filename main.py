@@ -52,6 +52,8 @@ def getLowestPrice(data):
     price_str = re.sub(r'[^0-9]', '', price_str)
     return int(price_str)
 
+
+#master function for all processing of item
 def processItem(item, db):
     if not item["enable"]:
         return
@@ -66,7 +68,7 @@ def processItem(item, db):
             print("[TEMP]save")
 
 
-
+#main loop of program
 def loop(db):
     while True:
         for item in items["items"]:
