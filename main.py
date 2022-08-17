@@ -18,7 +18,11 @@ def start():
 
     for url in urls:
         data = fetchPrice.fetch(url, currency)
-        print(getLowestPrice(data))
+        try:
+            print(getLowestPrice(data))
+        except Exception as ex:
+            print(ex)
+            
         time.sleep(1)
 
 
@@ -40,6 +44,9 @@ def getSettings():
 
 #get lowest price from fetched data
 def getLowestPrice(data):
+    if data["success"] == 0:
+        raise Exception("Could not get data from servers")
+
     price_str = data["lowest_price"]
     price_str = re.sub(r'[^0-9]', '', price_str)
     return int(price_str)

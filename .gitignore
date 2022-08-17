@@ -132,3 +132,7 @@ dmypy.json
 
 # Config file for program
 urls.txt
+
+
+#temp files
+*.temp

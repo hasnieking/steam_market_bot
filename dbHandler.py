@@ -4,7 +4,6 @@ import json
 
 #create connector for database
 def createDBConnector():
-    print("connector")
     f = open("settings.json")
     text = f.read()
     settings = json.loads(text)
