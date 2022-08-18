@@ -2,7 +2,6 @@
 import general
 import fetchPrice
 import dbHandler
-import re
 import time
 
 
@@ -48,8 +47,7 @@ def getLowestPrice(data):
     if data["success"] == 0:
         raise Exception("Could not get data from servers")
 
-    price_str = data["lowest_price"]
-    price_str = re.sub(r'[^0-9]', '', price_str)
+    price_str = general.removeNonDec(data["lowest_price"])
     return int(price_str)
 
 
@@ -58,14 +56,14 @@ def processItem(item, db):
     if not item["enable"]:
         return
     data = fetchPrice.fetch(item["url"], currency)
+    print(item["name"], end = ": ")
     try:
         print (getLowestPrice(data))
     except Exception as ex:
-        print(item["name"] + ": " + ex)
+        print(ex)
     else:
         if item["track_database"]:
-            #dbHandler.saveDB(data, db)
-            print("[TEMP]save")
+            dbHandler.saveDB(item["name"], data, db)
 
 
 #main loop of program
@@ -74,6 +72,7 @@ def loop(db):
         for item in items:
             processItem(item, db)
             time.sleep(0.1)
+        print("")
         time.sleep(refreshtime)
 
 

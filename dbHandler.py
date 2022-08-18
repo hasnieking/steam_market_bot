@@ -52,3 +52,23 @@ def itemNameReg(items,db):
                 sql = "INSERT INTO items (name) VALUES (%s)"
                 cursor.execute(sql, (item["name"], ))
                 db.commit()
+
+
+#save data from steam server to database
+def saveDB(name, data, db):
+    if not data["success"]:
+        return
+    cursor = db.cursor()
+    sql = "SELECT item_id FROM items WHERE name = %s"
+    cursor.execute(sql, (name, ))
+    id = cursor.fetchone()[0]
+
+    sql = "INSERT INTO itemvalues (item_id, lowest_price, \
+        volume, median_price) VALUES (%s, %s, %s, %s)"
+    lowest = general.removeNonDec(data["lowest_price"])
+    volume = general.removeNonDec(data["volume"])
+    median = general.removeNonDec(data["median_price"])
+    values = (id, lowest, volume, median)
+
+    cursor.execute(sql, values)
+    db.commit()
