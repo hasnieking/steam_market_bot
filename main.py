@@ -19,7 +19,7 @@ def start():
     db = None
     if(save_to_db):
         db = dbHandler.createDBConnector()
-        #dbHandler.readyDB(items)
+        dbHandler.readyDB(items, db)
 
     loop(db)
 
@@ -40,7 +40,7 @@ def getSettings():
 #get items
 def getItems():
     global items
-    items = general.readJSON(ITEMS_FILE)
+    items = general.readJSON(ITEMS_FILE)["items"]
 
 
 #get lowest price from fetched data
@@ -71,7 +71,7 @@ def processItem(item, db):
 #main loop of program
 def loop(db):
     while True:
-        for item in items["items"]:
+        for item in items:
             processItem(item, db)
             time.sleep(0.1)
         time.sleep(refreshtime)
