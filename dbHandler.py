@@ -21,7 +21,11 @@ def createDBConnector():
 
 #create tables in case they don't exist
 def readyDB(items, db):
-    needed_tables = ["items", "values"]
+    createTables(db)
+    itemNameReg(items, db)
+
+#create tables that will be used
+def createTables(db):
     cursor = db.cursor()
     cursor.execute("SELECT TABLE_NAME FROM information_schema.TABLES")
     tables = cursor.fetchall()
@@ -30,7 +34,8 @@ def readyDB(items, db):
         sql = "CREATE TABLE items (\
                     item_id INT NOT NULL AUTO_INCREMENT,\
                     name VARCHAR(255),\
-                    PRIMARY KEY (item_id)\
+                    PRIMARY KEY (item_id),\
+                    UNIQUE (name)\
                 )"
         cursor.execute(sql)
 
@@ -45,3 +50,17 @@ def readyDB(items, db):
                     PRIMARY KEY (id)\
                 )"
         cursor.execute(sql)
+
+
+#register item in items table if it does not exist
+def itemNameReg(items,db):
+    cursor = db.cursor()
+    for item in items:
+        if item["track_database"]:
+            sql = "SELECT item_id FROM items WHERE name = %s"
+            cursor.execute(sql, (item["name"], ))
+            result = cursor.fetchone()
+            if result == None:
+                sql = "INSERT INTO items (name) VALUES (%s)"
+                cursor.execute(sql, (item["name"], ))
+                db.commit()
