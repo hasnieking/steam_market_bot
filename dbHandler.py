@@ -1,3 +1,4 @@
+import general
 import mysql.connector
 import json
 
@@ -31,24 +32,11 @@ def createTables(db):
     tables = cursor.fetchall()
 
     if ("items",) not in tables:
-        sql = "CREATE TABLE items (\
-                    item_id INT NOT NULL AUTO_INCREMENT,\
-                    name VARCHAR(255),\
-                    PRIMARY KEY (item_id),\
-                    UNIQUE (name)\
-                )"
+        sql = general.readText("db/items.sql")
         cursor.execute(sql)
 
     if ("itemvalues",) not in tables:
-        sql = "CREATE TABLE itemvalues (\
-                    id INT NOT NULL AUTO_INCREMENT,\
-                    item_id INT,\
-                    lowest_price INT,\
-                    volume INT,\
-                    median_price INT,\
-                    time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\
-                    PRIMARY KEY (id)\
-                )"
+        sql = general.readText("db/itemvalues.sql")
         cursor.execute(sql)
 
 
